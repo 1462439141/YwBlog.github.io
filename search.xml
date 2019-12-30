@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>测试</title>
-    <url>/2019/12/30/%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p>测试测试</p>
-]]></content>
-  </entry>
-  <entry>
     <title>爬虫爬取k站图片</title>
     <url>/2019/12/06/%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96k%E7%AB%99%E5%9B%BE%E7%89%87/</url>
     <content><![CDATA[<h3 id="爬虫爬取k站图片"><a href="#爬虫爬取k站图片" class="headerlink" title="爬虫爬取k站图片"></a>爬虫爬取k站图片</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def Preservation(soup):</span><br><span class="line">   num = 1</span><br><span class="line">   # for i in soup.find_all(&apos;ul&apos;,&#123;&apos;id&apos;:&apos;post-list-posts&apos;&#125;):</span><br><span class="line">   for j in soup.find_all(&apos;a&apos;,&#123;&apos;class&apos;:&apos;directlink&apos;&#125;):</span><br><span class="line">       try:</span><br><span class="line">           img_u = (j[&apos;href&apos;])</span><br><span class="line">           sum= requests.get(img_u)</span><br><span class="line">           a = re.findall(&apos;[\u4e00-\u9fa5a-zA-Z0-9]+&apos;, img_u, re.S)  # 只要字符串中的中文，字母，数字</span><br><span class="line">           a = &quot;&quot;.join(a)</span><br><span class="line">           with open(r&apos;F:\Picture\壁纸\K站\测试2/&#123;&#125;.png&apos;.format(a), &apos;wb&apos;) as f:</span><br><span class="line">               f.write(sum.content)</span><br><span class="line">               print(num)</span><br><span class="line">               print(img_u)</span><br><span class="line">               num += 1</span><br><span class="line">       except IOError:</span><br><span class="line">           print(num)</span><br><span class="line">           print(img_u)</span><br><span class="line">           print(sum)</span><br><span class="line">           print(a)</span><br><span class="line">           print(&apos;第%d张====Preservation-------保存---------出错&apos;%(num))</span><br><span class="line">           RuntimeError(&apos;testError&apos;)</span><br><span class="line">           num += 1</span><br><span class="line">   print(num,end=&quot;&quot;)</span><br><span class="line">   print(&apos;张&apos;)</span><br></pre></td></tr></table></figure>]]></content>
