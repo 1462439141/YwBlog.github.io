@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.2">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1.导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包(下边没有sql包)123456789101112131415161718192021222324252627282930&#x2F;&#x2F;mybatis依赖包		&amp;lt;dependency&amp;gt;			&amp;lt;groupId&amp;gt;org.mybatis.generator&amp;lt;&#x2F;groupId&amp;gt;			&amp;lt;ar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis逆向工程">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B&#x2F;index.html">
+<meta property="og:site_name" content="lYAOWANl">
+<meta property="og:description" content="1.导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包(下边没有sql包)123456789101112131415161718192021222324252627282930&#x2F;&#x2F;mybatis依赖包		&amp;lt;dependency&amp;gt;			&amp;lt;groupId&amp;gt;org.mybatis.generator&amp;lt;&#x2F;groupId&amp;gt;			&amp;lt;ar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B&#x2F;image-20200525221924456.png">
+<meta property="og:updated_time" content="2020-05-25T14:38:45.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B&#x2F;image-20200525221924456.png">
+  <link rel="canonical" href="http://www.lyaowanl.com/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>mybatis逆向工程 | lYAOWANl</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b70b6756f3450c766e3b4feb5d3cd15c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lYAOWANl</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+          <i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.lyaowanl.com/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YAOWAN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/YLS_image.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lYAOWANl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            mybatis逆向工程
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-25 16:29:09 / 修改时间：22:38:45" itemprop="dateCreated datePublished" datetime="2020-05-25T16:29:09+08:00">2020-05-25</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包-下边没有sql包"><a href="#1-导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包-下边没有sql包" class="headerlink" title="1.导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包(下边没有sql包)"></a>1.导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包(下边没有sql包)</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//mybatis依赖包</span></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mybatis-generator-core&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.4.0&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		</span><br><span class="line">	<span class="comment">//generator依赖包，配置</span></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mybatis-generator-core&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.4.0&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.4.0&lt;/version&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line"></span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.4.0&lt;/version&gt;</span><br><span class="line">			&lt;configuration&gt;</span><br><span class="line">			&lt;overwrite&gt;true&lt;/overwrite&gt;</span><br><span class="line">				<span class="comment">//generatorConfig.xmk配置文件的路径</span></span><br><span class="line">				&lt;configurationFile&gt;src/main/resources/generatorConfig.xml&lt;/configurationFile&gt;</span><br><span class="line">			&lt;/configuration&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+<h1 id="2-创建数据库"><a href="#2-创建数据库" class="headerlink" title="2.创建数据库"></a>2.创建数据库</h1><p>自行创建</p>
+<h1 id="3-添加generatorConfig-xml配置文件"><a href="#3-添加generatorConfig-xml配置文件" class="headerlink" title="3.添加generatorConfig.xml配置文件"></a>3.添加generatorConfig.xml配置文件</h1><p>MySQL官网下载mysql-connector-java-8.0.20.jar驱动包  添加如下配置文件(后面会配置扫描路径)</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">		&lt;!DOCTYPE generatorConfiguration</span><br><span class="line">				PUBLIC <span class="string">"-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span></span><br><span class="line">				<span class="string">"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"</span>&gt;</span><br><span class="line">		&lt;generatorConfiguration&gt;</span><br><span class="line">			&lt;!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包--&gt;</span><br><span class="line">			&lt;classPathEntry location=<span class="string">"F:/SQL/MySQL/mysql-connector-java-8.0.20/mysql-connector-java-8.0.20.jar"</span>/&gt;</span><br><span class="line">			&lt;context id=<span class="string">"DB2Tables"</span> targetRuntime=<span class="string">"MyBatis3"</span>&gt;</span><br><span class="line">				&lt;!-- JavaBean 实现 序列化 接口 --&gt;</span><br><span class="line">				&lt;plugin type=<span class="string">"org.mybatis.generator.plugins.SerializablePlugin"</span> /&gt;</span><br><span class="line">				&lt;!-- 生成toString --&gt;</span><br><span class="line">				&lt;plugin type=<span class="string">"org.mybatis.generator.plugins.ToStringPlugin"</span> /&gt;</span><br><span class="line">				&lt;!-- optional，旨在创建<span class="class"><span class="keyword">class</span>时，对注释进行控制 --&gt;</span></span><br><span class="line"><span class="class">				&lt;<span class="title">commentGenerator</span>&gt;</span></span><br><span class="line"><span class="class">					&lt;<span class="title">property</span> <span class="title">name</span></span>=<span class="string">"suppressDate"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">					&lt;!-- &lt;property name=<span class="string">"suppressAllComments"</span> value=<span class="string">"true"</span>/&gt;--&gt;</span><br><span class="line">					&lt;property name=<span class="string">"suppressAllComments"</span> value=<span class="string">"true"</span> /&gt;</span><br><span class="line">				&lt;/commentGenerator&gt;</span><br><span class="line">				&lt;!--数据库链接URL，用户名、密码 --&gt;</span><br><span class="line">				&lt;jdbcConnection</span><br><span class="line">						driverClass=<span class="string">"com.mysql.cj.jdbc.Driver"</span></span><br><span class="line">						connectionURL=<span class="string">"jdbc:mysql://localhost:3306/ssmdb?serverTimezone=UTC"</span></span><br><span class="line">						userId=<span class="string">"root"</span></span><br><span class="line">						password=<span class="string">"数据库密码"</span>&gt;</span><br><span class="line">					&lt;property name=<span class="string">"nullCatalogMeansCurrent"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">				&lt;/jdbcConnection&gt;</span><br><span class="line">				&lt;!-- 类型转换 --&gt;</span><br><span class="line">				&lt;javaTypeResolver &gt;</span><br><span class="line">					&lt;!-- 是否使用bigDecimal,</span><br><span class="line">						<span class="keyword">false</span>: 把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer(默认)</span><br><span class="line">						<span class="keyword">true</span>:  把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal</span><br><span class="line">					--&gt;</span><br><span class="line">					&lt;property name=<span class="string">"forceBigDecimals"</span> value=<span class="string">"false"</span> /&gt;</span><br><span class="line">				&lt;/javaTypeResolver&gt;</span><br><span class="line">				&lt;!-- 生成模型的包名和位置--&gt;</span><br><span class="line">				&lt;javaModelGenerator targetPackage=<span class="string">"com.example.springbootdemo3logger.Model"</span> targetProject=<span class="string">"src/main/java"</span>&gt;</span><br><span class="line">					&lt;!-- 默认<span class="keyword">false</span> 是否允许子包 --&gt;</span><br><span class="line">					&lt;property name=<span class="string">"enableSubPackages"</span> value=<span class="string">"true"</span> /&gt;</span><br><span class="line">					&lt;!-- 默认<span class="keyword">false</span> 是否对model添加 构造函数 --&gt;</span><br><span class="line">					&lt;property name=<span class="string">"constructorBased"</span> value=<span class="string">"false"</span>/&gt;</span><br><span class="line">					&lt;!-- 默认<span class="keyword">false</span> 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 --&gt;</span><br><span class="line">					&lt;property name=<span class="string">"immutable"</span> value=<span class="string">"false"</span>/&gt;</span><br><span class="line">					&lt;!-- 默认<span class="keyword">false</span> 是否对类CHAR类型的列的数据进行trim操作 --&gt;</span><br><span class="line">					&lt;property name=<span class="string">"trimStrings"</span> value=<span class="string">"true"</span> /&gt;</span><br><span class="line">				&lt;/javaModelGenerator&gt;</span><br><span class="line">				&lt;!-- 生成映射文件的包名和位置--&gt;</span><br><span class="line">				&lt;sqlMapGenerator targetPackage=<span class="string">"Mapper"</span> targetProject=<span class="string">"src/main/resources"</span>&gt;</span><br><span class="line">					&lt;property name=<span class="string">"enableSubPackages"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">				&lt;/sqlMapGenerator&gt;</span><br><span class="line">				&lt;!-- 生成DAO的包名和位置--&gt;</span><br><span class="line">				&lt;javaClientGenerator type=<span class="string">"XMLMAPPER"</span> targetPackage=<span class="string">"com.example.springbootdemo3logger.Dao"</span> targetProject=<span class="string">"src/main/java"</span>&gt;</span><br><span class="line">					&lt;property name=<span class="string">"enableSubPackages"</span> value=<span class="string">"true"</span>/&gt;</span><br><span class="line">				&lt;/javaClientGenerator&gt;</span><br><span class="line">				&lt;!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名--&gt;</span><br><span class="line">				&lt;!-- &lt;table tableName="risk_model_order" domainObjectName="DSRiskModelOrder" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"&gt;&lt;/table&gt;</span><br><span class="line">				 &lt;table tableName="tel_bill_record" domainObjectName="DSTelBillRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"&gt;&lt;/table&gt;--&gt;</span><br><span class="line">				&lt;table tableName="表名" domainObjectName="生成的文件名"&gt;&lt;/table&gt;</span><br><span class="line">				&lt;table tableName="S_USER" domainObjectName="SsmUser"&gt;&lt;/table&gt;</span><br><span class="line">			&lt;/context&gt;</span><br><span class="line">&lt;/generatorConfiguration&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-application-properties或者application-yml文件配置数据库链接-mysql"><a href="#4-application-properties或者application-yml文件配置数据库链接-mysql" class="headerlink" title="4.application.properties或者application.yml文件配置数据库链接(mysql)"></a>4.application.properties或者application.yml文件配置数据库链接(mysql)</h1><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/数据库名?&amp;serverTimezone=GMT</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>=<span class="string">ywcc</span></span><br><span class="line">		</span><br><span class="line"><span class="comment">#在application.properties配置文件中配置扫描路径</span></span><br><span class="line"><span class="meta">mybatis.mapper-locations</span>= <span class="string">classpath:/Mapper/*.xml</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="5运行"><a href="#5运行" class="headerlink" title="5运行"></a>5运行</h1><p>右侧点击Maven&gt;项目名&gt;Plugins&gt;mybatis-generator双击运行mybatis-generator:generator</p>
+<p> Emmet：<img src="/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/image-20200525221924456.png" alt="图"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包-下边没有sql包"><span class="nav-number">1.</span> <span class="nav-text">1.导入mybatis以及generator插件的依赖包，并配置。引入slq相关依赖包(下边没有sql包)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-创建数据库"><span class="nav-number">2.</span> <span class="nav-text">2.创建数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-添加generatorConfig-xml配置文件"><span class="nav-number">3.</span> <span class="nav-text">3.添加generatorConfig.xml配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-application-properties或者application-yml文件配置数据库链接-mysql"><span class="nav-number">4.</span> <span class="nav-text">4.application.properties或者application.yml文件配置数据库链接(mysql)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5运行"><span class="nav-number">5.</span> <span class="nav-text">5运行</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/YLS_image.jpg"
+      alt="YAOWAN">
+  <p class="site-author-name" itemprop="name">YAOWAN</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:1462439141@qq.com" title="QQ-Mail &amp;rarr; mailto:1462439141@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>QQ-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/1462439141" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;1462439141" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="http://www.lyaowanl.top/" title="扯皮 — wp &amp;rarr; http:&#x2F;&#x2F;www.lyaowanl.top&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>扯皮 — wp</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://space.bilibili.com/12634498" title="Bilibili &amp;rarr; https:&#x2F;&#x2F;space.bilibili.com&#x2F;12634498" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>Bilibili</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YAOWAN</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div> -->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
+<script src="/js/schemes/pisces.js?v=7.4.2"></script>
+
+<script src="/js/next-boot.js?v=7.4.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.2"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'BCDGuMFBPDp6390LMhobPoFm-gzGzoHsz',
+    appKey: 'QE7gNEBYwVdjFbHiGwLx4Ykm',
+    placeholder: "说点什么吧......",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
