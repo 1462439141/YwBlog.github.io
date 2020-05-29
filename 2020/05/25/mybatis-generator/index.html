@@ -58,15 +58,15 @@
   <meta name="description" content="1.导入mybatis以及generator插件的依赖包，并配置。引入SQL相关依赖包(下边没有sql包)123456789101112131415161718192021222324252627282930&#x2F;&#x2F;mybatis依赖包		&amp;lt;dependency&amp;gt;			&amp;lt;groupId&amp;gt;org.mybatis.generator&amp;lt;&#x2F;groupId&amp;gt;			&amp;lt;ar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mybatis逆向工程">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis-generator&#x2F;index.html">
 <meta property="og:site_name" content="lYAOWANl">
 <meta property="og:description" content="1.导入mybatis以及generator插件的依赖包，并配置。引入SQL相关依赖包(下边没有sql包)123456789101112131415161718192021222324252627282930&#x2F;&#x2F;mybatis依赖包		&amp;lt;dependency&amp;gt;			&amp;lt;groupId&amp;gt;org.mybatis.generator&amp;lt;&#x2F;groupId&amp;gt;			&amp;lt;ar">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B&#x2F;image-20200525221924456.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis-generator&#x2F;image-20200525221924456.png">
 <meta property="og:updated_time" content="2020-05-28T11:01:11.370Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B&#x2F;image-20200525221924456.png">
-  <link rel="canonical" href="http://www.lyaowanl.com/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.lyaowanl.com&#x2F;2020&#x2F;05&#x2F;25&#x2F;mybatis-generator&#x2F;image-20200525221924456.png">
+  <link rel="canonical" href="http://www.lyaowanl.com/2020/05/25/mybatis-generator/">
 
 
 <script id="page-configurations">
@@ -259,7 +259,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.lyaowanl.com/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://www.lyaowanl.com/2020/05/25/mybatis-generator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="YAOWAN">
@@ -317,8 +317,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/05/25/mybatis-generator/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/25/mybatis-generator/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -342,7 +342,7 @@
 <h1 id="4-application-properties或者application-yml文件配置数据库链接-mysql"><a href="#4-application-properties或者application-yml文件配置数据库链接-mysql" class="headerlink" title="4.application.properties或者application.yml文件配置数据库链接(mysql)"></a>4.application.properties或者application.yml文件配置数据库链接(mysql)</h1><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/数据库名?&amp;serverTimezone=GMT</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>=<span class="string">ywcc</span></span><br><span class="line">		</span><br><span class="line"><span class="comment">#在application.properties配置文件中配置扫描路径</span></span><br><span class="line"><span class="meta">mybatis.mapper-locations</span>= <span class="string">classpath:/Mapper/*.xml</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="5运行"><a href="#5运行" class="headerlink" title="5运行"></a>5运行</h1><p>右侧点击Maven&gt;项目名&gt;Plugins&gt;mybatis-generator双击运行mybatis-generator:generator</p>
-<p> Emmet：<img src="/2020/05/25/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/image-20200525221924456.png" alt="图"></p>
+<p> Emmet：<img src="/2020/05/25/mybatis-generator/image-20200525221924456.png" alt="图"></p>
 
     </div>
 
